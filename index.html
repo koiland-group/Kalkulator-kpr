@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kalkulator KPR</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f9f9f9; padding: 20px; }
+    h1 { text-align: center; }
+    .box { max-width: 400px; margin: 20px auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 6px rgba(0,0,0,0.1); }
+    label { display: block; margin-top: 10px; }
+    input { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+    button { width: 100%; margin-top: 15px; padding: 10px; background: #007BFF; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background: #0056b3; }
+    .result { margin-top: 15px; text-align: center; font-size: 18px; }
+  </style>
+</head>
+<body>
+
+  <h1>Kalkulator KPR</h1>
+  <div class="box">
+    <label>Harga Properti (Rp)</label>
+    <input type="number" id="harga" placeholder="contoh: 500000000">
+
+    <label>Uang Muka (Rp)</label>
+    <input type="number" id="dp" placeholder="contoh: 100000000">
+
+    <label>Suku Bunga (% per tahun)</label>
+    <input type="number" id="bunga" step="0.1" placeholder="contoh: 8">
+
+    <label>Tenor (tahun)</label>
+    <input type="number" id="tenor" placeholder="contoh: 15">
+
+    <button onclick="hitungKPR()">Hitung Angsuran</button>
+    <div class="result" id="hasil"></div>
+  </div>
+
+  <script>
+    function hitungKPR() {
+      const harga = parseFloat(document.getElementById('harga').value) || 0;
+      const dp = parseFloat(document.getElementById('dp').value) || 0;
+      const bunga = parseFloat(document.getElementById('bunga').value) / 100 || 0;
+      const tenor = parseFloat(document.getElementById('tenor').value) || 0;
+
+      const pinjaman = harga - dp;
+      const n = tenor * 12;
+      const i = bunga / 12;
+
+      const angsuran = (pinjaman * i) / (1 - Math.pow(1 + i, -n));
+      document.getElementById('hasil').innerHTML =
+        isFinite(angsuran) ? `Angsuran per bulan: <b>Rp ${angsuran.toFixed(0)}</b>` : 'Lengkapi semua data!';
+    }
+  </script>
+
+</body>
+</html>
